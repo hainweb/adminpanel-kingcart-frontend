@@ -109,7 +109,7 @@ const ViewProducts = () => {
       return <span className={`${baseClasses} bg-red-50 text-red-700 border border-red-200`}>Out of Stock</span>;
     } else if (quantity < 2) {
       return <span className={`${baseClasses} bg-red-50 text-red-700 border border-red-200`}>Last Item!</span>;
-    } else if (quantity <6) {
+    } else if (quantity <=10) {
       return <span className={`${baseClasses} bg-amber-50 text-amber-700 border border-amber-200`}>Low Stock: {quantity}</span>;
     }
     return <span className={`${baseClasses} bg-green-50 text-green-700 border border-green-200`}>In Stock: {quantity}</span>;
@@ -125,7 +125,7 @@ const ViewProducts = () => {
   useEffect(() => {
     fetchProducts();
     
-    const interval = setInterval(fetchProducts, 20000);
+    const interval = setInterval(fetchProducts, 60000);
     return () => clearInterval(interval);
   }, [sortOption]);
 
@@ -180,12 +180,12 @@ const ViewProducts = () => {
             />
           </div>
           
-          <div className="relative">
+          <div className="relative cursor-pointer">
             <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">↕️</span>
             <select
               value={sortOption}
               onChange={handleSortChange}
-              className="pl-10 pr-4 py-2 w-full sm:w-64 border border-gray-200 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 appearance-none"
+              className="pl-10 pr-4 py-2 w-full sm:w-64 border cursor-pointer border-gray-200 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 appearance-none"
             >
               <option value="none">Sort by Latest</option>
               <option value="latest">Sort by FIrst Added</option>
@@ -233,6 +233,7 @@ const ViewProducts = () => {
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {index + 1}
                         </td>
+                        <Link to={`/product/${product._id}`} key={product._id}>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
                             <img
@@ -245,7 +246,7 @@ const ViewProducts = () => {
                               <p className="text-sm text-gray-500 truncate max-w-xs">{product.Description}</p>
                             </div>
                           </div>
-                        </td>
+                        </td></Link>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className="text-sm font-medium text-gray-900">
                             {formatPrice(product.Price)}

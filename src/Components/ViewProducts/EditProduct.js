@@ -178,20 +178,50 @@ const EditProduct = () => {
 
     const validateForm = () => {
         const validationErrors = {};
-        if (!product.Name?.trim()) validationErrors.Name = 'Product Name is required';
-        if (!product.Price || product.Price <= 0) validationErrors.Price = 'Valid Price is required';
-        if (!product.SellingPrice || product.SellingPrice <= 0) validationErrors.SellingPrice = 'Valid SellingPrice is required';
-        if (product.SellingPrice <= product.Price) {
-            validationErrors.SellingPrice = 'SellingPrice should not be greater than Price';
+
+        // Validate product name
+        if (!product.Name?.trim()) {
+            validationErrors.Name = 'Product Name is required';
         }
 
-        if (!product.Category?.trim()) validationErrors.Category = 'Category is required';
-        if (!product.Description?.trim()) validationErrors.Description = 'Description is required';
-        if (!product.Quantity || product.Quantity <= 0) validationErrors.Quantity = 'Valid Quantity is required';
-        if (!product.Return) validationErrors.Return = 'Return option is required';
+        // Validate Price (converted to a number for comparison)
+        if (!product.Price || Number(product.Price) <= 0) {
+            validationErrors.Price = 'Valid Price is required';
+        }
 
+        // Validate Selling Price (converted to a number for comparison)
+        if (!product.SellingPrice || Number(product.SellingPrice) <= 0) {
+            validationErrors.SellingPrice = 'Valid Selling Price is required';
+        } else if (product.Price && Number(product.SellingPrice) <= Number(product.Price)) {
+            // Check if Selling Price is less than or equal to Price.
+            // Error message: "Selling price must be greater than price"
+            validationErrors.SellingPrice = 'Selling price must be greater than price';
+        }
+
+        // Validate Category
+        if (!product.Category?.trim()) {
+            validationErrors.Category = 'Category is required';
+        }
+
+        // Validate Description
+        if (!product.Description?.trim()) {
+            validationErrors.Description = 'Description is required';
+        }
+
+        // Validate Return Option
+        if (product.Return === undefined) {
+            validationErrors.Return = 'Return option is required';
+        }
+
+        // Join error messages with a newline separator (removing the object brackets)
+        const errorMessages = Object.values(validationErrors).join('\n');
+        if (errorMessages.length > 0) {
+            alert(errorMessages);
+        }
         return validationErrors;
     };
+
+
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
@@ -199,6 +229,7 @@ const EditProduct = () => {
         const validationErrors = validateForm();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
+            setSaveLoading(false)
             return;
         }
 
@@ -612,13 +643,16 @@ const EditProduct = () => {
 
                     {/* Submit Button */}
                     {saveLoading ? (
-                       <button type="button" class="bg-indigo-500 text-white px-4 py-2 flex items-center" disabled>
-                       <svg class="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
-                         <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle>
-                       </svg>
-                       Saving...
-                     </button>
-                     
+                        <button type="button" class="bg-indigo-500 text-white px-4 py-2 flex items-center rounded disabled:opacity-75 cursor-not-allowed" disabled>
+                        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                         
+                          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                         
+                          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                        </svg>
+                        Saving...
+                      </button>
+
                     ) : (
                         <button
                             type="submit"

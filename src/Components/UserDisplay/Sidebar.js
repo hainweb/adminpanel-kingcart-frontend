@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Categories from "./Categories";
 import Slider from "./Slider";
 import Offers from "./Offers";
+import PremiumPage from "./Default";
 
 function Sidebar() {
   const [activeCategory, setActiveCategory] = useState(""); // Manage active category
@@ -19,9 +20,7 @@ function Sidebar() {
       case "offers":
         return <Offers />;
       default:
-        return <div className="text-center text-gray-600">Select a category to view content</div>
-        
-        ;
+        return <PremiumPage />;
     }
   };
 
@@ -32,19 +31,24 @@ function Sidebar() {
   };
 
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="flex h-screen bg-gradient-to-r from-gray-50 to-gray-100 overflow-hidden">
       {/* Sidebar */}
       <div
         className={`${
           isSliderActive ? "w-1/6" : "w-1/4"
-        } fixed top-15 left-0 h-full bg-gray-100 shadow-md p-4 transition-all duration-300 overflow-y-auto`}
+        } fixed top-0 left-0 h-full bg-gradient-to-b from-indigo-800 to-blue-700 shadow-2xl p-8 transition-all duration-300 overflow-y-auto`}
       >
-        <ul className="space-y-4">
+        <h2 className="text-3xl font-extrabold text-white mb-10 tracking-wide">
+          Premium
+        </h2>
+        <ul className="space-y-6">
           <li>
             <button
               onClick={() => handleCategoryClick("categories")}
-              className={`block py-2 px-4 rounded-md text-gray-700 ${
-                activeCategory === "categories" ? "bg-blue-500 text-white" : "hover:bg-gray-200"
+              className={`w-full text-left font-semibold py-3 px-5 rounded-xl transition-colors duration-200 ${
+                activeCategory === "categories"
+                  ? "bg-white text-indigo-800 shadow-lg"
+                  : "text-white hover:bg-indigo-600 hover:shadow-md"
               }`}
             >
               Categories
@@ -53,8 +57,10 @@ function Sidebar() {
           <li>
             <button
               onClick={() => handleCategoryClick("slider")}
-              className={`block py-2 px-4 rounded-md text-gray-700 ${
-                activeCategory === "slider" ? "bg-blue-500 text-white" : "hover:bg-gray-200"
+              className={`w-full text-left font-semibold py-3 px-5 rounded-xl transition-colors duration-200 ${
+                activeCategory === "slider"
+                  ? "bg-white text-indigo-800 shadow-lg"
+                  : "text-white hover:bg-indigo-600 hover:shadow-md"
               }`}
             >
               Slider
@@ -63,8 +69,10 @@ function Sidebar() {
           <li>
             <button
               onClick={() => handleCategoryClick("offers")}
-              className={`block py-2 px-4 rounded-md text-gray-700 ${
-                activeCategory === "offers" ? "bg-blue-500 text-white" : "hover:bg-gray-200"
+              className={`w-full text-left font-semibold py-3 px-5 rounded-xl transition-colors duration-200 ${
+                activeCategory === "offers"
+                  ? "bg-white text-indigo-800 shadow-lg"
+                  : "text-white hover:bg-indigo-600 hover:shadow-md"
               }`}
             >
               Offers
@@ -77,9 +85,11 @@ function Sidebar() {
       <div
         className={`${
           isSliderActive ? "ml-[16.66%]" : "ml-[25%]"
-        } flex-1 p-4 overflow-y-auto`}
+        } flex-1 p-10 transition-all duration-300 overflow-y-auto`}
       >
-        {renderRightContent()} {/* Dynamically render the content */}
+        <div className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl p-10">
+          {renderRightContent()}
+        </div>
       </div>
     </div>
   );

@@ -91,6 +91,7 @@ const AddCategories = () => {
                 .catch((error) => {
                     setSaveLoading(false)
                     console.error("Error adding category:", error);
+                    alert('Something went wrong ')
                 });
         } else {
             setSaveLoading(false)
@@ -180,12 +181,13 @@ const AddCategories = () => {
                     </div>
 
                     {saveLoading ?
-                        <button type="button" class="bg-indigo-500 text-white px-4 py-2 flex items-center" disabled>
-                            <svg class="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
-                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle>
-                                Adding...
-                                </svg>
-                        </button> :
+                       <button
+                       onClick={handleAddCategory}
+                       className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+                   >
+                       <div class="border-t-4 border-white border-solid w-4 h-4 rounded-full animate-spin"></div>
+                    </button>
+                      :
 
                         <button
                             onClick={handleAddCategory}

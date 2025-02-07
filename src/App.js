@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import axios from 'axios';
 import { BASE_URL } from './Components/Urls/Urls';
 import Navbar from './Components/Navbar/Navbar';
+import ProductDisplay from './Components/ViewProducts/Product';
+import Dashboard from './Components/Dashboard/Dashboard';
+import OrdersTable from './Components/TotalOrders/Orders';
 
 // Lazy-loaded Components
 const Login = lazy(() => import('./Components/Login/Login'));
@@ -26,7 +29,7 @@ function App() {
   useEffect(() => {
     const fetchAdmin = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/get-admin`);
+        const response = await axios.get(`${BASE_URL}/get-admin`,{withCredentials:true});
         if (response.data.status) {
           setAdmin(response.data.admin);
         }
@@ -45,7 +48,7 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Navbar admin={admin} />
+        <Navbar admin={admin} setAdmin={setAdmin}/>
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             {/* Public Routes */}
@@ -60,6 +63,9 @@ function App() {
                 </ProtectedRoute>
               }
             />
+
+            <Route path="/product/:id" element={<ProtectedRoute> <ProductDisplay /> </ProtectedRoute>} />
+
             <Route
               path="/edit-product/:id"
               element={
@@ -109,6 +115,14 @@ function App() {
               }
             />
             <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/categories"
               element={
                 <ProtectedRoute>
@@ -145,6 +159,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <EditSlide />
+                </ProtectedRoute>
+              }
+            />
+              <Route
+              path="/total-orders"
+              element={
+                <ProtectedRoute>
+                  <OrdersTable />
                 </ProtectedRoute>
               }
             />

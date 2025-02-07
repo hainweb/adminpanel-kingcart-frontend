@@ -33,7 +33,7 @@ const OrdersList = () => {
                     onClick={() => navigate(-1)}
                     className="bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition duration-300"
                 >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-undo-2"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-undo-2"><path d="M9 14 4 9l5-5" /><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11" /></svg>
                 </button>
             </div>
 
@@ -65,12 +65,23 @@ const OrdersList = () => {
                                                 <td className="px-6 py-4 border-b">
                                                     {order.total ? `₹${order.total}` : `₹${order.product.Price}`}
                                                 </td>
-                                                <td className="px-6 py-4 border-b">{order.status}</td>
+                                                <td className="px-6 py-4 border-b">
+                                                    {order.status3 ? (
+                                                        order.status3
+                                                    ) : order.cancel ? (
+                                                        'Canceled'
+                                                    ) : order.status2 ? (
+                                                        order.status2
+                                                    ) : (
+                                                        order.status
+                                                    )}
+                                                </td>
+
                                                 <td className="px-6 py-4 border-b">
                                                     <Link
                                                         to={`ordered-product/${order._id}`}
                                                         className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300"
-                                                    > 
+                                                    >
                                                         View Products
                                                     </Link>
                                                 </td>

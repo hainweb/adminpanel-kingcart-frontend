@@ -27,6 +27,24 @@ const UsersList = () => {
         fetchUsers();
     }, []);
 
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return isNaN(date.getTime())
+            ? "December 18, 2024 at 7:08:20 AM" // Fallback date
+            : date.toLocaleString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+                hour12: true,
+            });
+    };
+
+
+
+
     return (
         <section className="min-h-screen bg-gray-100 p-5">
             {loading ? (
@@ -39,14 +57,15 @@ const UsersList = () => {
                 </div>
             ) : (
                 <div className="container mx-auto bg-white shadow-md rounded-md overflow-hidden">
-                    <div className="max-h-[600px] overflow-y-auto">
+                    <div className="max-h-[700px] sm:max-h-[600px] overflow-y-auto">
                         <table className="w-full text-left border-collapse">
                             <thead className="bg-blue-500 text-white sticky top-0">
                                 <tr>
                                     <th className="py-3 px-4">No</th>
                                     <th className="py-3 px-4">Users</th>
                                     <th className="py-3 px-4">Mobile</th>
-                                    <th className="py-3 px-4">All Orders</th>
+                                    <th className="py-3 px-4">No of Orders</th>
+                                    <th className="py-3 px-4">Orders</th>
                                     <th className="py-3 px-4">Details</th>
                                 </tr>
                             </thead>
@@ -55,9 +74,8 @@ const UsersList = () => {
                                     users.map((user, index) => (
                                         <tr
                                             key={user._id}
-                                            className={`${
-                                                index % 2 === 0 ? 'bg-gray-50' : 'bg-gray-100'
-                                            } hover:bg-gray-200`}
+                                            className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-gray-100'
+                                                } hover:bg-gray-200`}
                                         >
                                             <td className="py-3 px-4">{index + 1}</td>
                                             <td className="py-3 px-4">{user.Name}</td>
@@ -70,6 +88,16 @@ const UsersList = () => {
                                                 >
                                                     View Orders
                                                 </Link>
+
+                                            </td>
+                                            <td className="py-3 px-4">
+                                                <p className="text-sm text-gray-600">
+                                                    Joined: {formatDate(user.CreatedAt)}
+                                                </p>
+                                                <p className="text-sm text-gray-600">
+                                                    Last Active: {formatDate(user.LastActive)}
+                                                </p>
+
                                             </td>
                                         </tr>
                                     ))

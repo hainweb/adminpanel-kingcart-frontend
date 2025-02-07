@@ -50,7 +50,7 @@ const Login = ({ setAdmin }) => {
                 setLoading(false);
             });
     };
-
+ 
     return (
         <div className="relative min-h-screen flex justify-center items-center bg-white overflow-hidden">
             {/* Dynamic Background */}

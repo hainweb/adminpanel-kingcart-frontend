@@ -1,100 +1,115 @@
+import axios from 'axios';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { BASE_URL } from '../Urls/Urls';
 
-function Navbar({ admin }) {
+function Navbar({ admin, setAdmin }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const closeMenu = () => setIsMenuOpen(false);
+
+  const handleLogout = () => {
+    axios.get(`${BASE_URL}/logout`, { withCredentials: true })
+      .then(() => {
+        setAdmin(null);
+        closeMenu();
+        navigate('/login');
+      })
+      .catch((error) => console.error('Logout failed', error));
   };
 
   return (
-    <nav className="bg-white border-b border-gray-200 dark:bg-gray-900 dark:border-gray-700 sticky top-0 z-50">
-      <div className="max-w-screen-xl mx-auto flex flex-wrap items-center justify-between p-4">
-        {/* Logo or Brand Name */}
-        <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-            Admin Panel
-          </span>
-        </Link>
+    <nav className="bg-gradient-to-r from-gray-900 to-gray-800 shadow-lg sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16">
+          <div className="flex items-center">
+            <Link to="/" className="flex items-center">
+              <span className="text-2xl font-bold text-white hover:text-blue-400 transition-colors duration-200">
+                Admin Panel
+              </span>
+            </Link>
+          </div>
 
-        {/* Mobile Menu Button */}
-        <button
-          onClick={toggleMenu}
-          type="button"
-          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-          aria-controls="navbar-default"
-          aria-expanded={isMenuOpen}
-        >
-          <span className="sr-only">Open main menu</span>
-          <svg
-            className="w-5 h-5"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 17 14"
-            aria-hidden="true"
-          >
-            <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M1 1h15M1 7h15M1 13h15"
-            />
-          </svg>
-        </button>
-
-        {/* Navbar Links */}
-        <div
-          className={`${isMenuOpen ? 'block' : 'hidden'
-            } w-full md:block md:w-auto`}
-          id="navbar-default"
-        >
-          <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-            <li>
-              <button
-                className={'px-4 py-1 rounded transition duration-300 border-2 border-solid text-white border-blue-500 hover:border-blue-700 text-sm'}
-                
-              >
-              {admin ? (
-                admin.Name) : (
-                  <Link to='/login'>
-                Login 
-                </Link>
-              )
-              }
+          <div className="flex items-center md:hidden">
+            <button onClick={toggleMenu} className="inline-flex items-center justify-center p-2 rounded-md text-gray-200 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white transition-colors duration-200">
+              <span className="sr-only">Open main menu</span>
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
+              </svg>
             </button>
-          </li>
-          <li>
-            <Link
-              to="/"
-              className="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
-              aria-current="page"
-            >
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/user-list"
-              className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-            >
-              All Users
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/edit-user-display"
-              className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-            >
-              Edit User Display
-            </Link>
-          </li>
-        </ul>
+          </div>
+
+          <div className="hidden md:flex md:items-center md:space-x-8">
+            <NavLinks admin={admin} handleLogout={handleLogout} isMobile={false} closeMenu={closeMenu} currentPath={location.pathname} />
+          </div>
+        </div>
+
+        <div className={`${isMenuOpen ? 'block' : 'hidden'} md:hidden`}>
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <NavLinks admin={admin} handleLogout={handleLogout} isMobile={true} closeMenu={closeMenu} currentPath={location.pathname} />
+          </div>
+        </div>
       </div>
-    </div>
-    </nav >
+    </nav>
   );
 }
+
+const NavLinks = ({ admin, handleLogout, isMobile, closeMenu, currentPath }) => {
+  const links = [
+    { path: '/', label: 'Home' },
+    { path: '/dashboard', label: 'Analytics' },
+    { path: '/user-list', label: 'All Users' },
+    { path: '/edit-user-display', label: 'Edit User Display' },
+    { path: '/total-orders', label: 'Order History' }
+  ];
+
+  const baseStyles = "transition-colors duration-200 rounded-md font-medium";
+  const mobileBase = `block px-3 py-2 text-base ${baseStyles}`;
+  const desktopBase = `px-3 py-2 text-sm ${baseStyles}`;
+
+  const inactiveStyles = isMobile
+    ? `${mobileBase} text-gray-100 hover:text-white hover:bg-gray-700`
+    : `${desktopBase} text-gray-100 hover:text-white hover:bg-gray-700`;
+
+  const activeStyles = isMobile
+    ? `${mobileBase} text-white bg-blue-600`
+    : `${desktopBase} text-white border-2 border-blue-500`;
+
+  return (
+    <>
+      {admin ? (
+      <div className="gradient-border inline-block rounded-md p-0.5">
+      <button
+        onClick={handleLogout}
+        className="bg-black text-white rounded-md px-4 py-2 shadow-sm text-sm font-medium  focus:outline-none transition-all duration-300"
+      >
+        {admin.Name} / Logout
+      </button>
+    </div>
+    
+    
+     
+      ) : (
+        <Link to="/login" onClick={closeMenu} className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
+          Login
+        </Link>
+      )}
+
+      {links.map(({ path, label }) => (
+        <Link
+          key={path}
+          to={path}
+          onClick={closeMenu}
+          className={currentPath === path ? activeStyles : inactiveStyles}
+        >
+          {label}
+        </Link>
+      ))}
+    </>
+  );
+};
 
 export default Navbar;

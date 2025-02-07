@@ -5,26 +5,26 @@ import { Link } from "react-router-dom";
 
 export function Slider() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [slides, setSlides] = useState([]); // Initializing slides as an empty array
+  const [slides, setSlides] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [newSlide, setNewSlide] = useState({ image: null, linkTo: "" });
   const [categoriesList, setCategoriesList] = useState([]);
   const [previewImage, setPreviewImage] = useState(null);
+  const [isAdding, setIsAdding] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [deletingId, setDeletingId] = useState(null);
   const slideInterval = 3000;
 
   useEffect(() => {
-    // Fetch existing slides
     axios
       .get(`${BASE_URL}/get-sliders`, { withCredentials: true })
       .then((response) => {
-        console.log('slider', response.data);
-        setSlides(response.data || []); // Ensure it is always an array
+        setSlides(response.data || []);
       })
       .catch((error) => {
         console.error("Error fetching slides:", error);
       });
 
-    // Fetch categories for dropdown
     axios
       .get(`${BASE_URL}/get-categoriesList`, { withCredentials: true })
       .then((response) => {
@@ -33,17 +33,14 @@ export function Slider() {
       .catch((error) => {
         console.error("Error fetching categories:", error);
       });
-
-    // Auto-slide interval
-  }, []); // Only runs on mount
+  }, []);
 
   useEffect(() => {
     if (slides.length > 0) {
       const interval = setInterval(() => {
         setActiveIndex((prevIndex) => (prevIndex + 1) % slides.length);
       }, slideInterval);
-
-      return () => clearInterval(interval); // Cleanup the interval on unmount or when slides change
+      return () => clearInterval(interval);
     }
   }, [slides]);
 
@@ -51,7 +48,7 @@ export function Slider() {
     const file = e.target.files[0];
     if (file) {
       setNewSlide({ ...newSlide, image: file });
-      setPreviewImage(URL.createObjectURL(file)); // Show a preview
+      setPreviewImage(URL.createObjectURL(file));
     }
   };
 
@@ -62,6 +59,7 @@ export function Slider() {
 
   const handleAddSlide = () => {
     if (newSlide.image && newSlide.linkTo) {
+      setIsAdding(true);
       const formData = new FormData();
       formData.append("image", newSlide.image);
       formData.append("linkTo", newSlide.linkTo);
@@ -72,55 +70,65 @@ export function Slider() {
           headers: { "Content-Type": "multipart/form-data" },
         })
         .then((response) => {
-          console.log('adedee', response);
-
-          setSlides(response.data.slides); // Add the new slide to the list
+          setSlides(response.data.slides);
           setNewSlide({ image: null, linkTo: "" });
           setPreviewImage(null);
           setShowForm(false);
         })
         .catch((error) => {
           console.error("Error adding slide:", error);
+          alert('Something Went Wrong')
+        })
+        .finally(() => {
+          setIsAdding(false);
         });
     } else {
       alert("Please upload an image and select a link.");
     }
   };
 
+  const confirmDeleteSlide = (id) => {
+    if (window.confirm('Are you sure you want to delete this slider?')) {
+        handleDeleteSlide(id);
+        console.log('Slide deleted');
+    }
+};
+
+
   const handleDeleteSlide = (id) => {
-    console.log('Slide ID:', id);
-  
+    setIsDeleting(true);
+    setDeletingId(id);
     axios
       .post(`${BASE_URL}/delete-slider/${id}`, {}, { withCredentials: true })
       .then((response) => {
-        console.log('Delete slider response:', response);
-  
         if (response.data.status) {
           alert(response.data.message);
-          // Update the slides state by removing the deleted slide
           setSlides(slides.filter((slide) => slide.id !== id));
         } else {
           alert(response.data.message);
         }
       })
       .catch((error) => {
-        console.error('Error deleting slide:', error);
+        console.error("Error deleting slide:", error);
+        alert('Something Went Wrong')
+      })
+      .finally(() => {
+        setIsDeleting(false);
+        setDeletingId(null);
       });
   };
-  
 
   return (
     <div>
-      {/* Slider Section */}
       <div className="relative w-full max-w-7xl mx-auto overflow-hidden rounded-xl">
         <div
           className="flex transition-transform duration-700 ease-in-out"
           style={{ transform: `translateX(-${activeIndex * 100}%)` }}
         >
-          {Array.isArray(slides) && slides.map((slide, index) => (
+          {slides.map((slide, index) => (
             <img
               key={index}
-              src={slide.image} // Assuming the server returns the image URL in `image`
+              src={slide.image}
               alt={`Slide ${index + 1}`}
               className="w-full h-64 object-cover"
             />
@@ -128,7 +136,7 @@ export function Slider() {
         </div>
 
         <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
-          {Array.isArray(slides) && slides.map((_, i) => (
+          {slides.map((_, i) => (
             <button
               key={i}
               onClick={() => setActiveIndex(i)}
@@ -160,7 +168,6 @@ export function Slider() {
         </button>
       </div>
 
-      {/* Add Slide Button */}
       <div className="mt-4 text-center">
         <button
           onClick={() => setShowForm(!showForm)}
@@ -170,7 +177,6 @@ export function Slider() {
         </button>
       </div>
 
-      {/* Table for Viewing Slides */}
       {!showForm && (
         <div className="mt-6 max-w-4xl mx-auto">
           <table className="table-auto w-full border-collapse border border-gray-300">
@@ -191,15 +197,18 @@ export function Slider() {
                       className="w-54 h-16 object-cover"
                     />
                   </td>
-                  <td className="border border-gray-300 px-4 py-2">{slide.linkTo}</td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {slide.linkTo}
+                  </td>
                   <td className="border border-gray-300 px-4 py-2 text-center">
                     <button
-                      onClick={() => handleDeleteSlide(slide.id)}
+                      onClick={() => confirmDeleteSlide(slide.id)}
                       className="bg-red-500 text-white px-3 py-1 rounded-md"
+                      disabled={isDeleting && deletingId === slide.id}
                     >
-                       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18" /><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" /><line x1="10" x2="10" y1="11" y2="17" /><line x1="14" x2="14" y1="11" y2="17" /></svg>
-                           
-                     
+                      {isDeleting && deletingId === slide.id
+                        ? "Deleting..."
+                        : "Delete"}
                     </button>
                   </td>
                 </tr>
@@ -209,11 +218,9 @@ export function Slider() {
         </div>
       )}
 
-      {/* Add New Slide Form */}
       {showForm && (
         <div className="bg-white shadow-md rounded-md p-4 mt-4 max-w-3xl mx-auto">
           <h3 className="text-lg font-bold mb-4">Add New Slide</h3>
-
           <label className="block text-gray-700 mb-2">Upload Image</label>
           <input
             type="file"
@@ -221,17 +228,13 @@ export function Slider() {
             onChange={handleFileChange}
             className="w-full p-2 border border-gray-300 rounded-md mb-4"
           />
-
           {previewImage && (
-            <div className="mb-4">
-              <img
-                src={previewImage}
-                alt="Preview"
-                className="w-full h-32 object-cover rounded-md"
-              />
-            </div>
+            <img
+              src={previewImage}
+              alt="Preview"
+              className="w-full h-32 object-cover rounded-md mb-4"
+            />
           )}
-
           <label className="block text-gray-700 mb-2">Link To</label>
           <select
             name="linkTo"
@@ -240,27 +243,24 @@ export function Slider() {
             className="w-full p-2 border border-gray-300 rounded-md mb-4"
           >
             <option value="">Select a category</option>
-            {categoriesList.length > 0 ? (
-              categoriesList.map((category, index) => (
-                <option key={index} value={category.linkTo}>
-                  {category.name || category}
-                </option>
-              ))
-            ) : (
-              <option value="">No categories available</option>
-            )}
+            {categoriesList.map((category, index) => (
+              <option key={index} value={category.linkTo}>
+                {category.name || category}
+              </option>
+            ))}
           </select>
-
           <button
             onClick={handleAddSlide}
             className="bg-green-500 text-white px-4 py-2 rounded-md"
+            disabled={isAdding}
           >
-            Add Slide
+            {isAdding ? "Adding..." : "Add Slide"}
           </button>
         </div>
       )}
     </div>
   );
 }
+
 
 export default Slider;

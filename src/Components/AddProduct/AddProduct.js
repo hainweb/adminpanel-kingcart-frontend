@@ -170,15 +170,18 @@ const AddProduct = () => {
         if (!product.Name || product.Name.trim() === '') {
             errors.Name = 'Product Name is required';
         }
-        if (!product.Price || isNaN(product.Price) || product.Price <= 0) {
+        if (!product.Price || isNaN(product.Price) || Number(product.Price) <= 0) {
             errors.Price = 'Valid Price is required';
         }
-        if (!product.SellingPrice || isNaN(product.SellingPrice) || product.SellingPrice <= 0) {
+
+        if (!product.SellingPrice || isNaN(product.SellingPrice) || Number(product.SellingPrice) <= 0) {
             errors.SellingPrice = 'Valid SellingPrice is required';
         }
-        if (product.Price >= product.SellingPrice) {
-            errors.SellingPrice = 'SellingPrice should not be Less than Price';
+
+        if (Number(product.Price) >= Number(product.SellingPrice)) {
+            errors.SellingPrice = 'SellingPrice should not be less than Price';
         }
+
 
         if (!product.Category || product.Category.trim() === '') {
             errors.Category = 'Category is required';
@@ -195,6 +198,12 @@ const AddProduct = () => {
         if (!product.ReturnOption) {
             errors.ReturnOption = 'Return option is required';
         }
+        // Join error messages with a newline separator (removing the object brackets)
+        const errorMessages = Object.values(errors).join('\n');
+        if (errorMessages.length > 0) {
+            alert(errorMessages);
+        }
+
         return errors;
     };
 
@@ -202,7 +211,7 @@ const AddProduct = () => {
     const handleFormSubmit = async (e) => {
         e.preventDefault();
 
-        setLoading(true)
+
 
         const validationErrors = validateForm();
         if (Object.keys(validationErrors).length > 0) {
@@ -232,7 +241,7 @@ const AddProduct = () => {
         });
 
         try {
-
+            setLoading(true)
             const response = await axios.post(`${BASE_URL}/add-product`, formData, {
                 withCredentials: true,
                 headers: {
@@ -590,12 +599,16 @@ const AddProduct = () => {
                 {/* Submit Button */}
 
                 {loading ? (
-                    <button type="button" class="bg-indigo-500 text-white px-4 py-2 flex items-center" disabled>
-                        <svg class="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
-                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle>
-                        </svg>
-                        Adding...
-                    </button>
+                  <button type="button" class="bg-indigo-500 text-white px-4 py-2 flex items-center rounded disabled:opacity-75 cursor-not-allowed" disabled>
+                  <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                   
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                   
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                  </svg>
+                  Adding...
+                </button>
+                
                 ) : (
                     <button
                         type="submit"
