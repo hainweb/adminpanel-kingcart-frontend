@@ -22,7 +22,7 @@ const AnalyticsDashboard = ({ totalInStock, totalLowStock, totalOutOfStock, tota
 
   useEffect(() => {
     const fetchCategoryProducts = () => {
-      axios.get(`${BASE_URL}/get-products-category`).then((response) => {
+      axios.get(`${BASE_URL}/get-products-category`,{withCredentials: true}).then((response) => {
         console.log('Products category', response);
         setCategoryProducts(response.data.categories)
         setTotalProducts(response.data.totalProducts)
