@@ -160,10 +160,10 @@ const Login = ({ setAdmin }) => {
                     >
                         {loading ? (
                             <div className="flex space-x-1">
-    <span className="block w-2 h-2 bg-white rounded-full animate-bounce [animation-delay:0ms]" />
-    <span className="block w-2 h-2 bg-white rounded-full animate-bounce [animation-delay:150ms]" />
-    <span className="block w-2 h-2 bg-white rounded-full animate-bounce [animation-delay:300ms]" />
-</div>
+      <span className="block w-2 h-2 bg-white rounded-full animate-bounce [animation-duration:1000ms] [animation-delay:0ms]" />
+      <span className="block w-2 h-2 bg-white rounded-full animate-bounce [animation-duration:1000ms] [animation-delay:150ms]" />
+      <span className="block w-2 h-2 bg-white rounded-full animate-bounce [animation-duration:1000ms] [animation-delay:300ms]" />
+    </div>
 
                         ) : (
                             'Login'
