@@ -36,8 +36,8 @@ const OrdersTable = () => {
     const fetchOrders = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch(`${BASE_URL}/get-total-orders`, {
-          credentials: 'include'
+        const response = await axios.get(`${BASE_URL}/get-total-orders`, {
+          withCredentials: true
         });
         const data = await response.json();
 
