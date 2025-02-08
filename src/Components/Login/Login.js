@@ -159,8 +159,8 @@ const Login = ({ setAdmin }) => {
                         className="w-full py-3 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600 focus:ring-2 focus:ring-blue-400 focus:outline-none flex justify-center items-center"
                     >
                         {loading ? (
-                            <div className="flex space-x-1">
-      <span className="animate-bounce delay-150">.</span>
+                            <div className="flex text-lg space-x-1">
+      <span className="animate-bounce ">.</span>
         <span className="animate-bounce delay-300">.</span>
         <span className="animate-bounce delay-750">.</span>
     </div>
