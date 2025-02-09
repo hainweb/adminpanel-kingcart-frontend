@@ -159,7 +159,7 @@ const Login = ({ setAdmin }) => {
                         className="w-full py-3 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600 focus:ring-2 focus:ring-blue-400 focus:outline-none flex justify-center items-center"
                     >
                         {loading ? (
-                                <div className="flex items-center justify-center p-4">
+                                <div className="flex items-center justify-center p-3">
       <style>{`
         @keyframes bounce {
           0%, 100% {
@@ -182,9 +182,9 @@ const Login = ({ setAdmin }) => {
         }
       `}</style>
       <div className="flex space-x-2">
-        <div className="dot w-4 h-4 bg-white rounded-full" />
-        <div className="dot w-4 h-4 bg-white rounded-full" />
-        <div className="dot w-4 h-4 bg-white rounded-full" />
+        <div className="dot w-2 h-2 bg-white rounded-full" />
+        <div className="dot w-2 h-2 bg-white rounded-full" />
+        <div className="dot w-2 h-2 bg-white rounded-full" />
       </div>
     </div>
 
