@@ -49,7 +49,17 @@ function App() {
     <div className="App">
       <Router>
         <Navbar admin={admin} setAdmin={setAdmin}/>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div className="row">
+        <div className="container" style={{ textAlign: 'center' }}>
+          <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900 flex-col">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+            <br />
+            <p>Loading, please wait...</p>
+          </div>
+
+
+        </div>
+      </div>}>
           <Routes>
             {/* Public Routes */}
             <Route path="/login" element={<Login setAdmin={setAdmin} />} />
