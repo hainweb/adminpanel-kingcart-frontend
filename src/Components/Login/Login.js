@@ -159,12 +159,34 @@ const Login = ({ setAdmin }) => {
                         className="w-full py-3 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600 focus:ring-2 focus:ring-blue-400 focus:outline-none flex justify-center items-center"
                     >
                         {loading ? (
-                            <div className="flex space-x-1">
-  <span className="block w-2 h-2 bg-white rounded-full animate-pulse opacity-50" />
-  <span className="block w-2 h-2 bg-white rounded-full animate-pulse opacity-75 delay-150" />
-  <span className="block w-2 h-2 bg-white rounded-full animate-pulse opacity-100 delay-300" />
-</div>
-
+                                <div className="flex items-center justify-center p-4">
+      <style>{`
+        @keyframes bounce {
+          0%, 100% {
+            transform: translateY(0);
+            opacity: 0.3;
+          }
+          50% {
+            transform: translateY(-12px);
+            opacity: 1;
+          }
+        }
+        .dot {
+          animation: bounce 0.8s infinite;
+        }
+        .dot:nth-child(2) {
+          animation-delay: 0.2s;
+        }
+        .dot:nth-child(3) {
+          animation-delay: 0.4s;
+        }
+      `}</style>
+      <div className="flex space-x-2">
+        <div className="dot w-4 h-4 bg-white rounded-full" />
+        <div className="dot w-4 h-4 bg-white rounded-full" />
+        <div className="dot w-4 h-4 bg-white rounded-full" />
+      </div>
+    </div>
 
                         ) : (
                             'Login'
