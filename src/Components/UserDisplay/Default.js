@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Sparkles, PenTool, Wand2, RefreshCw } from 'lucide-react';
 
-const AdminEditingAnimation = () => {
+const AdminEditingAnimation = ({onCategoryClick}) => {
   const [isEditing, setIsEditing] = useState(true);
   const [progress, setProgress] = useState(10);
   const [particles, setParticles] = useState([]);
@@ -134,6 +134,34 @@ const AdminEditingAnimation = () => {
           <div className="text-center text-sm text-blue-300 animate-[pulse_1.5s_ease-in-out_infinite]">
            Admin can edit user pages
           </div>
+
+<ul className="flex md:hidden space-x-4">
+  <li className="flex-1">
+    <button
+      onClick={() => handleCategoryClick("categories")}
+      className={`w-full text-left font-semibold py-3 px-5 rounded-xl transition-colors duration-200 ${
+        activeCategory === "categories"
+          ? "bg-white text-indigo-800 shadow-lg"
+          : "text-white hover:bg-indigo-600 hover:shadow-md"
+      }`}
+    >
+      Categories
+    </button>
+  </li>
+  <li className="flex-1">
+    <button
+      onClick={() => handleCategoryClick("slider")}
+      className={`w-full text-left font-semibold py-3 px-5 rounded-xl transition-colors duration-200 ${
+        activeCategory === "slider"
+          ? "bg-white text-indigo-800 shadow-lg"
+          : "text-white hover:bg-indigo-600 hover:shadow-md"
+      }`}
+    >
+      Slider
+    </button>
+  </li>
+</ul>
+
 
           {/* Action Button */}
           <a href="http://localhost:3000/">
