@@ -27,6 +27,7 @@ function Sidebar() {
     } else {
       // On mobile, we forward the category click to PremiumPage
       // (for example, PremiumPage could use it for internal navigation)
+      setActiveCategory(category)
       console.log("Mobile view: category click forwarded:", category);
       // Optionally, you can call any additional function here if needed
     }
