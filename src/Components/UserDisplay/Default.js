@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Sparkles, PenTool, Wand2, RefreshCw } from 'lucide-react';
 
-const AdminEditingAnimation = ({onCategoryClick}) => {
+const AdminEditingAnimation = ({handleCategoryClick}) => {
   const [isEditing, setIsEditing] = useState(true);
   const [progress, setProgress] = useState(10);
   const [particles, setParticles] = useState([]);
