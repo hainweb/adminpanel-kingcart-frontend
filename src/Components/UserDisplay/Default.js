@@ -135,8 +135,8 @@ const AdminEditingAnimation = ({onCategoryClick}) => {
            Admin can edit user pages
           </div>
 
-<ul className="flex md:hidden space-x-4">
-  <li className="flex-1">
+<div className="flex md:hidden space-x-4">
+  <div className="flex-1">
     <button
       onClick={() => handleCategoryClick("categories")}
       className={`w-full text-left font-semibold py-3 px-5 rounded-xl transition-colors duration-200 ${
@@ -147,8 +147,8 @@ const AdminEditingAnimation = ({onCategoryClick}) => {
     >
       Categories
     </button>
-  </li>
-  <li className="flex-1">
+  </div>
+  <div className="flex-1">
     <button
       onClick={() => handleCategoryClick("slider")}
       className={`w-full text-left font-semibold py-3 px-5 rounded-xl transition-colors duration-200 ${
@@ -159,8 +159,9 @@ const AdminEditingAnimation = ({onCategoryClick}) => {
     >
       Slider
     </button>
-  </li>
-</ul>
+  </div>
+</div>
+
 
 
           {/* Action Button */}
