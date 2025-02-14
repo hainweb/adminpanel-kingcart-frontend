@@ -139,9 +139,7 @@ const AdminEditingAnimation = ({onCategoryClick}) => {
   <div className="flex-1">
     <button
       onClick={() => handleCategoryClick("categories")}
-      className={'w-full text-left font-semibold py-3 px-5 rounded-xl transition-colors duration-200 
-        
-          bg-white text-indigo-800 shadow-lg'
+      className={"w-full text-left font-semibold py-3 px-5 rounded-xl transition-colors duration-200  bg-white text-indigo-800 shadow-lg"
           }
     >
       Categories
@@ -150,8 +148,7 @@ const AdminEditingAnimation = ({onCategoryClick}) => {
   <div className="flex-1">
     <button
       onClick={() => handleCategoryClick("slider")}
-      className={'w-full text-left font-semibold py-3 px-5 rounded-xl transition-colors duration-200 
-          bg-white text-indigo-800 shadow-lg '
+      className={"w-full text-left font-semibold py-3 px-5 rounded-xl transition-colors duration-200 bg-white text-indigo-800 shadow-lg "
         } 
     >
       Slider
