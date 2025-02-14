@@ -139,11 +139,10 @@ const AdminEditingAnimation = ({onCategoryClick}) => {
   <div className="flex-1">
     <button
       onClick={() => handleCategoryClick("categories")}
-      className={`w-full text-left font-semibold py-3 px-5 rounded-xl transition-colors duration-200 ${
-        activeCategory === "categories"
-          ? "bg-white text-indigo-800 shadow-lg"
-          : "text-white hover:bg-indigo-600 hover:shadow-md"
-      }`}
+      className={'w-full text-left font-semibold py-3 px-5 rounded-xl transition-colors duration-200 
+        
+          bg-white text-indigo-800 shadow-lg'
+          }
     >
       Categories
     </button>
@@ -151,11 +150,9 @@ const AdminEditingAnimation = ({onCategoryClick}) => {
   <div className="flex-1">
     <button
       onClick={() => handleCategoryClick("slider")}
-      className={`w-full text-left font-semibold py-3 px-5 rounded-xl transition-colors duration-200 ${
-        activeCategory === "slider"
-          ? "bg-white text-indigo-800 shadow-lg"
-          : "text-white hover:bg-indigo-600 hover:shadow-md"
-      }`}
+      className={'w-full text-left font-semibold py-3 px-5 rounded-xl transition-colors duration-200 
+          bg-white text-indigo-800 shadow-lg '
+        } 
     >
       Slider
     </button>
@@ -165,7 +162,7 @@ const AdminEditingAnimation = ({onCategoryClick}) => {
 
 
           {/* Action Button */}
-          <a href="http://localhost:3000/">
+          <a href="https://ecommerce-king-cart.onrender.com">
           <button
            
             className="w-full mt-4 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-md 
