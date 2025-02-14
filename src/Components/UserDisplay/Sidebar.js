@@ -35,21 +35,34 @@ function Sidebar() {
 
   // Render the right content. On mobile, we always show PremiumPage.
   const renderRightContent = () => {
-    if (isMobile) {
+  if (isMobile) {
+    if (activeCategory) {
+      switch (activeCategory) {
+        case "categories":
+          return <Categories />;
+        case "slider":
+          return <Slider />;
+        case "offers":
+          return <Offers />;
+        default:
+          return <PremiumPage handleCategoryClick={handleCategoryClick} />;
+      }
+    }
+    return <PremiumPage handleCategoryClick={handleCategoryClick} />;
+  }
+  // Desktop rendering logic
+  switch (activeCategory) {
+    case "categories":
+      return <Categories />;
+    case "slider":
+      return <Slider />;
+    case "offers":
+      return <Offers />;
+    default:
       return <PremiumPage handleCategoryClick={handleCategoryClick} />;
-    }
-    // On desktop, show content based on the active category.
-    switch (activeCategory) {
-      case "categories":
-        return <Categories />;
-      case "slider":
-        return <Slider />;
-      case "offers":
-        return <Offers />;
-      default:
-        return <PremiumPage handleCategoryClick={handleCategoryClick} />;
-    }
-  };
+  }
+};
+
 
   return (
     <div className="flex h-screen bg-gradient-to-r from-gray-50 to-gray-100 overflow-hidden">
