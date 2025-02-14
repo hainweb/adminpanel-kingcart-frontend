@@ -35,7 +35,7 @@ function Sidebar() {
   // Render the right content. On mobile, we always show PremiumPage.
   const renderRightContent = () => {
     if (isMobile) {
-      return <PremiumPage onCategoryClick={handleCategoryClick} />;
+      return <PremiumPage handleCategoryClick={handleCategoryClick} />;
     }
     // On desktop, show content based on the active category.
     switch (activeCategory) {
@@ -46,7 +46,7 @@ function Sidebar() {
       case "offers":
         return <Offers />;
       default:
-        return <PremiumPage onCategoryClick={handleCategoryClick} />;
+        return <PremiumPage handleCategoryClick={handleCategoryClick} />;
     }
   };
 
