@@ -117,14 +117,11 @@ const AddProduct = () => {
             return new Promise((resolve, reject) => {
                 const img = new Image();
                 img.onload = () => {
-                    if (img.width === 600 && img.height === 600) {
-                        resolve({
+                    resolve({
                             file,
                             preview: URL.createObjectURL(file),
                         });
-                    } else {
-                        reject('All additional images must be 600x600 pixels.');
-                    }
+                    
                 };
                 img.onerror = () => reject('Error loading image file.');
                 img.src = URL.createObjectURL(file);
