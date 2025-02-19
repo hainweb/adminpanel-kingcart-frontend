@@ -11,6 +11,7 @@ const ViewProducts = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("none");
   const [loading, setLoading] = useState(true);
+  const [deleteProId, setDeleteProId]=useState("")
 
   const fetchProducts = async () => {
     try {
@@ -91,12 +92,14 @@ const ViewProducts = () => {
     }
 
     try {
+      setDeleteProId(productId)
       const response = await axios.post(`${BASE_URL}/delete-item/${productId}`);
       if (response.data.status) {
        
         alert('Product deleted successfully');
         fetchProducts();
       }
+      setDeleteProId("")
     } catch (err) {
       console.error('Error deleting product:', err);
       alert('Failed to delete product. Please try again.');
@@ -270,11 +273,17 @@ const ViewProducts = () => {
                           >
                             Edit
                           </Link>
+                          
                           <button
                             onClick={() => handleDelete(product._id, product.Name)}
                             className="inline-flex items-center px-3 py-1.5 bg-red-50 text-red-700 rounded-lg hover:bg-red-100 transition-colors duration-200"
                           >
-                            Delete
+                            {deleteProId==product._id 
+                          <svg class="animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24">
+                      </svg>
+                        :
+                        "Delete"
+                          }
                           </button>
                         </td>
                       </tr>
