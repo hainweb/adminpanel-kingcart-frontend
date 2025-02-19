@@ -40,7 +40,7 @@ const OrdersTable = () => {
         const response = await axios.get(`${BASE_URL}/get-total-orders`, {
           withCredentials: true
         });
-        const data = response
+        const data = response.data
 
         // Sort orders by date (latest first) by replacing " at" from the string.
         data.sort((a, b) => {
@@ -50,7 +50,7 @@ const OrdersTable = () => {
           return dateB - dateA;
         });
 
-        setOrders(response);
+        setOrders(data);
       } catch (error) {
         console.error('Error fetching orders:', error);
       } finally {
