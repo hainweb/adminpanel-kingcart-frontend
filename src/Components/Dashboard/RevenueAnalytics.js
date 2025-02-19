@@ -211,6 +211,7 @@ const AnalyticsDashboard = ({ dataLoading,
             <p className="text-2xl font-bold">{pendingCashToAdmin}</p>
             <span className="text-green-500 text-sm">↑ 8.2% vs last period</span>
           </div>
+</>
   )}
         </div>
 
