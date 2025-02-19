@@ -5,7 +5,7 @@ import { ShoppingBag, ShoppingBasket, CircleDashed, CircleCheckBig, SnowflakeIco
 import axios from 'axios';
 import { BASE_URL } from '../Urls/Urls';
 
-const AnalyticsDashboard = ({ totalInStock, totalLowStock, totalOutOfStock, totalOrders, cancledOrders, returnedProducts,
+const AnalyticsDashboard = ({ dataLoading, totalInStock, totalLowStock, totalOutOfStock, totalOrders, cancledOrders, returnedProducts,
   totalOrderedProducts,
   deliveredOrders,
   pendingCashToAdmin,
@@ -36,7 +36,7 @@ const AnalyticsDashboard = ({ totalInStock, totalLowStock, totalOutOfStock, tota
   console.log('total in stock', totalInStock);
   console.log('categiry sta', categoryStatus);
   // Sample analytics data
-  const salesMetrics = { dataLoading,
+  const salesMetrics = { 
     totalOrders,
     totalOrderedProducts,
     deliveredOrders,
