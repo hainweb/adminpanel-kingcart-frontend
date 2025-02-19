@@ -108,7 +108,7 @@ const AnalyticsDashboard = ({ dataLoading, totalInStock, totalLowStock, totalOut
         <div className="bg-white border border-gray-200 p-2 shadow-lg rounded">
           <p className="font-semibold">{label}</p>
           <p className="text-blue-600">Products: {payload[0].value}</p>
-          <p className={`text-${payload[0].payload.quantity <= 1 ? 'red' : payload[0].payload.quantity <= 10 ? 'yellow' : 'green'}-500`}>
+          <p className={`text-${payload[0].payload.quantity <= 1 ? 'red' : payload[0].payload.quantity <= 10 ? 'orange' : 'green'}-500`}>
             Quantity: {payload[0].payload.quantity}
           </p>
 
