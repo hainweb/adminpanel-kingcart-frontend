@@ -8,6 +8,8 @@ import axios from 'axios';
 import { BASE_URL } from '../Urls/Urls';
 
 function Main() {
+const [loading, setLoading]= useState(false)
+  
   const [currentPage, setCurrentPage] = useState('dashboard');
   const [totalInStock, setTotalInStock] = useState('')
   const [totalOutOfStock, setTotalOutOfStock] = useState('')
@@ -34,6 +36,7 @@ function Main() {
   useEffect(() => {
 
     const fetchDatas = () => {
+      setLoading(true)
       axios.get(`${BASE_URL}/get-total-revenue`, { withCredentials: true }).then((response) => {
         console.log('response data', response);
         setTotalInStock(response.data.totalInStock)
@@ -56,8 +59,9 @@ function Main() {
         setAverageOrderValue(response.data.averageOrderValue)
 
         setTotalUsers(response.data.totalUser)
-
+setLoading(false)
       })
+      
     }
     fetchDatas()
 
@@ -143,7 +147,8 @@ function Main() {
         {(() => {
           switch (currentPage) {
             case 'dashboard':
-              return <Dashboard totalRevenue={totalRevenue}
+              return <Dashboard  loading={loading}
+              totalRevenue={totalRevenue}
               totalOrders={totalOrders}
               totalUsers={totalUsers}
               conversionRate={conversionRate}
@@ -165,7 +170,8 @@ function Main() {
              
               />;
             case 'revenue':
-              return <RevenueAnalytics totalRevenue={totalRevenue}
+              return <RevenueAnalytics  loading={loading}
+                totalRevenue={totalRevenue}
                 totalOrders={totalOrders}
                 conversionRate={conversionRate}
                 averageOrderValue={averageOrderValue}
@@ -177,7 +183,7 @@ function Main() {
 
               />;
             case 'product':
-              return <ProductAnalytics
+              return <ProductAnalytics  loading={loading}
                 totalInStock={totalInStock}
                 totalOutOfStock={totalOutOfStock}
                 totalLowStock={totalLowStock}
@@ -193,7 +199,7 @@ function Main() {
                 categoryStatus={categoryStatus}
               />;
             case 'user':
-              return <UserAnalytics
+              return <UserAnalytics  loading={loading}
                 totalUsers={totalUsers}
                 totalOrders={deliveredOrders}
                 totalOrderedProducts={totalOrderedProducts}
