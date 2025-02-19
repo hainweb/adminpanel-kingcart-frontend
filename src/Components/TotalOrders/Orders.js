@@ -50,7 +50,7 @@ const OrdersTable = () => {
           return dateB - dateA;
         });
 
-        setOrders(data);
+        setOrders(response);
       } catch (error) {
         console.error('Error fetching orders:', error);
       } finally {
