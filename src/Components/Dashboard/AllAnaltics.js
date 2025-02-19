@@ -308,39 +308,57 @@ const renderCustomLegend = () => {
       <main className="max-w-7xl mx-auto px-4 py-6">
         {/* Key Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-gray-500 text-sm">Total Revenue</h3>
-              <IndianRupee className="text-blue-500" size={20} />
-            </div>
-            <p className="text-2xl font-bold">₹{salesMetrics.totalRevenue}</p>
-            <span className="text-green-500 text-sm">↑ 12.5% vs last period</span>
-          </div>
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-gray-500 text-sm">Total Orders</h3>
-              <ShoppingBag className="text-blue-500" size={20} />
-            </div>
-            <p className="text-2xl font-bold">{salesMetrics.totalOrders}</p>
-            <span className="text-green-500 text-sm">↑ 8.2% vs last period</span>
-          </div>
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-gray-500 text-sm">Total Users</h3>
-              <Users className="text-blue-500" size={20} />
-            </div>
-            <p className="text-2xl font-bold">{totalUsers}</p>
-            <span className="text-green-500 text-sm">↑ 15.3% vs last period</span>
-          </div>
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-gray-500 text-sm">Conversion Rate</h3>
-              <Activity className="text-blue-500" size={20} />
-            </div>
-            <p className="text-2xl font-bold">{salesMetrics.conversionRate}%</p>
-            <span className="text-red-500 text-sm">↓ 2.1% vs last period</span>
-          </div>
+  {loading ? (
+    // Render 4 skeleton cards
+    Array.from({ length: 4 }).map((_, index) => (
+      <div key={index} className="bg-white rounded-lg shadow p-6 animate-pulse">
+        <div className="flex items-center justify-between mb-4">
+          <div className="bg-gray-300 rounded w-20 h-4" />
+          <div className="bg-gray-300 rounded w-6 h-6" />
         </div>
+        <div className="bg-gray-300 rounded w-full h-8" />
+        <div className="mt-4 bg-gray-300 rounded w-1/2 h-4" />
+      </div>
+    ))
+  ) : (
+    // Render actual cards when loading is false
+    <>
+      <div className="bg-white rounded-lg shadow p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-gray-500 text-sm">Total Revenue</h3>
+          <IndianRupee className="text-blue-500" size={20} />
+        </div>
+        <p className="text-2xl font-bold">₹{salesMetrics.totalRevenue}</p>
+        <span className="text-green-500 text-sm">↑ 12.5% vs last period</span>
+      </div>
+      <div className="bg-white rounded-lg shadow p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-gray-500 text-sm">Total Orders</h3>
+          <ShoppingBag className="text-blue-500" size={20} />
+        </div>
+        <p className="text-2xl font-bold">{salesMetrics.totalOrders}</p>
+        <span className="text-green-500 text-sm">↑ 8.2% vs last period</span>
+      </div>
+      <div className="bg-white rounded-lg shadow p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-gray-500 text-sm">Total Users</h3>
+          <Users className="text-blue-500" size={20} />
+        </div>
+        <p className="text-2xl font-bold">{totalUsers}</p>
+        <span className="text-green-500 text-sm">↑ 15.3% vs last period</span>
+      </div>
+      <div className="bg-white rounded-lg shadow p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-gray-500 text-sm">Conversion Rate</h3>
+          <Activity className="text-blue-500" size={20} />
+        </div>
+        <p className="text-2xl font-bold">{salesMetrics.conversionRate}%</p>
+        <span className="text-red-500 text-sm">↓ 2.1% vs last period</span>
+      </div>
+    </>
+  )}
+</div>
+
 
         {/* Product Status and User Type Distribution */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
