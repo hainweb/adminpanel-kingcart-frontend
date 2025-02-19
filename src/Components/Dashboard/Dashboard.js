@@ -147,7 +147,7 @@ setLoading(false)
         {(() => {
           switch (currentPage) {
             case 'dashboard':
-              return <Dashboard  loading={loading}
+              return <Dashboard  dataLoading={loading}
               totalRevenue={totalRevenue}
               totalOrders={totalOrders}
               totalUsers={totalUsers}
@@ -170,7 +170,7 @@ setLoading(false)
              
               />;
             case 'revenue':
-              return <RevenueAnalytics  loading={loading}
+              return <RevenueAnalytics  dataLoading={loading}
                 totalRevenue={totalRevenue}
                 totalOrders={totalOrders}
                 conversionRate={conversionRate}
@@ -183,7 +183,7 @@ setLoading(false)
 
               />;
             case 'product':
-              return <ProductAnalytics  loading={loading}
+              return <ProductAnalytics  dataLoading={loading}
                 totalInStock={totalInStock}
                 totalOutOfStock={totalOutOfStock}
                 totalLowStock={totalLowStock}
@@ -199,7 +199,7 @@ setLoading(false)
                 categoryStatus={categoryStatus}
               />;
             case 'user':
-              return <UserAnalytics  loading={loading}
+              return <UserAnalytics  dataLoading={loading}
                 totalUsers={totalUsers}
                 totalOrders={deliveredOrders}
                 totalOrderedProducts={totalOrderedProducts}
