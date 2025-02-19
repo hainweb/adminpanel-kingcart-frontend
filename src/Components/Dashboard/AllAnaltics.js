@@ -222,17 +222,7 @@ const renderCustomLegend = () => {
     outOfStock: totalOutOfStock,
     totalInStock: totalInStock,
     returnedProducts,
-    topCategories: [
-      { name: 'Electronics', count: 45, revenue: 500 },
-      { name: 'Clothing', count: 78, revenue: 300 },
-      { name: 'Home', count: 34, revenue: 1200 },
-      { name: 'hhsbhhs', count: 45, revenue: 900 },
-      { name: 'njksm', count: 78, revenue: 680 },
-      { name: 'Hne', count: 34, revenue: 500 },
-      { name: 'adarsha', count: 45, revenue: 800 },
-      { name: 'jnjns', count: 78, revenue: 400 },
-      { name: 'ajinada', count: 34, revenue: 1600 }
-    ]
+    
   };
 
   const userMetrics = {
