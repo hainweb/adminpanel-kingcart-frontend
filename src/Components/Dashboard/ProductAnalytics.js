@@ -215,6 +215,7 @@ const AnalyticsDashboard = ({ totalInStock, totalLowStock, totalOutOfStock, tota
             <p className="text-2xl font-bold">{salesMetrics.pendingOrders}</p>
             <span className="text-red-500 text-sm">↓ 2.1% vs last period</span>
           </div>
+</>
         )}
         </div>
 
