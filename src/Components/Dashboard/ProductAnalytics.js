@@ -79,39 +79,10 @@ const AnalyticsDashboard = ({ dataLoading, totalInStock, totalLowStock, totalOut
     revenue: cat.deliveredRevenue,
   }));
 
-
-  const categoryOrder= [
-    { name: 'Electronics', orders: 45, revenue: 500 },
-    { name: 'Clothing', orders: 68, revenue: 600 },
-    { name: 'Fashion', orders: 34, revenue: 1200 },
-    { name: 'Mobiles', orders: 45, revenue: 1400 }, 
-    { name: 'Watches', orders: 78, revenue: 1680 },
-    { name: 'Shirt', orders: 34, revenue: 1500 },
-    { name: 'Pant', orders: 55, revenue: 1800 },
-    { name: 'Jeans', orders: 78, revenue: 1400 },
-    { name: 'Fivesleave', orders: 94, revenue: 1600 },
-    { name: 'Fivesleave', orders: 14, revenue: 1160 },
-    { name: 'Mobile', orders: 98, revenue: 1680 },
-    { name: 'Fivesleave', orders: 138, revenue: 1080 },
-    { name: 'Fivesleave', orders: 128, revenue: 2380 },
-    { name: 'njksm', orders: 158, revenue: 1480 },
-    { name: 'Watch', orders: 128, revenue: 2000 },
-    { name: 'Fivesleave', orders: 88, revenue: 1380 },
-    { name: 'Baggy', orders: 138, revenue: 2480 },
-    { name: 'Fivesleave', orders: 98, revenue: 2580 },
-    { name: 'Electronic', orders: 157, revenue: 2680 },
-    { name: 'Fivesleave', orders: 168, revenue: 3680 },
-    { name: 'Fivesleave', orders: 118, revenue: 4680 },
-     { name: 'Books', orders: 178, revenue: 5280 },
-
-    
-  ]
- 
-  /* 
   const categoryOrder = categoryStatus.map(cat => ({
     name: cat.category,
     orders: cat.totalOrderedProducts,
-  })); */
+  })); 
   
   const categoryProductsData = categoryProducts.map(cat => ({
     name: cat.name,
@@ -334,13 +305,13 @@ const AnalyticsDashboard = ({ dataLoading, totalInStock, totalLowStock, totalOut
         <h2 className="text-lg font-semibold mb-4">Category Revenue</h2>
         <div className="h-80">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={categoryOrder}>
+            <BarChart data={categoryData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
               <YAxis />
               <Tooltip /> 
               <Bar dataKey="revenue">
-                {categoryOrder.map((_, index) => (
+                {categoryData.map((_, index) => (
                   <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
                 ))}
               </Bar>
