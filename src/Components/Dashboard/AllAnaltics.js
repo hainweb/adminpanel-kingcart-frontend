@@ -5,7 +5,7 @@ import { Activity, Users, ShoppingBag, DollarSign, ChevronLeft, ChevronRight, Ar
 import axios from 'axios';
 import { BASE_URL } from '../Urls/Urls';
 
-const AnalyticsDashboard = ({ totalOrders, totalProducts, totalRevenue, totalUsers, deliveredOrders, conversionRate, deliveredRevenue, averageOrderValue,
+const AnalyticsDashboard = ({ loading, totalOrders, totalProducts, totalRevenue, totalUsers, deliveredOrders, conversionRate, deliveredRevenue, averageOrderValue,
   returnedProducts, totalOrderedProducts, totalInStock,
   pendingCashToAdmin,
   pendingAmountToAdmin,
