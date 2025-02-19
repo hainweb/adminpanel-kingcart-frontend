@@ -279,7 +279,7 @@ const ViewProducts = () => {
                             className="inline-flex items-center px-3 py-1.5 bg-red-50 text-red-700 rounded-lg hover:bg-red-100 transition-colors duration-200"
                           >
                             {deleteProId === product._id ? (
-  <div className="w-8 h-8 border-2 border-black rounded-full animate-spin border-t-transparent"></div>
+  <div className="w-4 h-4 border-2 border-red-700 rounded-full animate-spin border-t-transparent"></div>
                   
 ) : (
   "Delete"
