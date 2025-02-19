@@ -279,9 +279,8 @@ const ViewProducts = () => {
                             className="inline-flex items-center px-3 py-1.5 bg-red-50 text-red-700 rounded-lg hover:bg-red-100 transition-colors duration-200"
                           >
                             {deleteProId === product._id ? (
-  <svg className="animate-spin h-5 w-5 mr-3 text-black" viewBox="0 0 24 24">
-    {/* SVG content goes here */}
-  </svg>
+  <div className="w-8 h-8 border-2 border-black rounded-full animate-spin border-t-transparent"></div>
+                  
 ) : (
   "Delete"
 )}
