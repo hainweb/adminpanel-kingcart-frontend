@@ -49,7 +49,7 @@ const renderCustomLegend = () => {
   );
 };
 
-const AnalyticsDashboard = ({
+const AnalyticsDashboard = ({ dataLoading,
   totalUsers,
   totalOrders,
   totalOrderedProducts,
@@ -175,6 +175,21 @@ const AnalyticsDashboard = ({
       <main className="max-w-7xl mx-auto px-4 py-6">
         {/* Key Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+        {dataLoading ? (
+    // Render 4 skeleton cards
+    Array.from({ length: 4 }).map((_, index) => (
+      <div key={index} className="bg-white rounded-lg shadow p-6 animate-pulse">
+        <div className="flex items-center justify-between mb-4">
+          <div className="bg-gray-300 rounded w-20 h-4" />
+          <div className="bg-gray-300 rounded w-6 h-6" />
+        </div>
+        <div className="bg-gray-300 rounded w-full h-8" />
+        <div className="mt-4 bg-gray-300 rounded w-1/2 h-4" />
+      </div>
+    ))
+  ) : (
+    // Render actual cards when loading is false
+    <>
           <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-gray-500 text-sm">Total Users</h3>
@@ -217,6 +232,7 @@ const AnalyticsDashboard = ({
               ↓ 2.1% vs last period
             </span>
           </div>
+  )}
         </div>
 
         {/* Charts Section */}
