@@ -232,6 +232,7 @@ const AnalyticsDashboard = ({ dataLoading,
               ↓ 2.1% vs last period
             </span>
           </div>
+</>
   )}
         </div>
 
