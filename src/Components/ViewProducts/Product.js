@@ -15,6 +15,7 @@ const ProductDisplay = ({ setCartCount }) => {
   const [notificationMessage, setNotificationMessage] = useState("");
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+const [selectedOptions, setSelectedOptions] = useState({});
 
   const navigate = useNavigate();
 
