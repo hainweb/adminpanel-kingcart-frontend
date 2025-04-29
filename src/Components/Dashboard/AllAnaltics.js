@@ -227,8 +227,8 @@ const renderCustomLegend = () => {
 
   const userMetrics = {
     total: totalOrders,
-    cancel: (cancledOrders || 0).toLocaleString(),
-    return: (returnedProducts || 0).toLocaleString()
+    cancel: (cancledOrders || 0),
+    return: (returnedProducts || 0)
   };
 
   // Product status data for pie chart
